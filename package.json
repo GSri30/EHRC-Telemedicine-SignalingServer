@@ -1,0 +1,26 @@
+{
+  "name": "telecommunication-webrtc",
+  "version": "1.0.0",
+  "description": "Server for socket connection to establish a webrtc connection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "npx nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/gsri30/"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "socket.io": "^4.1.2",
+    "uuidv4": "^6.2.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}
