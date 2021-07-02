@@ -13,4 +13,8 @@ const URIS={
     JOIN_ROOM:'/joinRoom',
 }
 
-module.exports={EVENTS,URIS}
+const URLS={
+    FRONTEND_ENDPOINT:'http://localhost:4200',
+}
+
+module.exports={EVENTS,URIS,URLS}

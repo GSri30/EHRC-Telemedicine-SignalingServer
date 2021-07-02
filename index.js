@@ -1,4 +1,4 @@
-var {EVENTS,URIS} = require('./Constants.js');
+var {EVENTS,URIS,URLS} = require('./Constants.js');
 
 const app = require('express')();
 
@@ -11,7 +11,7 @@ const https = require('https').createServer(options, app);
 
 const io = require('socket.io')(https,{
     cors: {
-        origins: ['http://localhost:4200']
+        origins: [URLS.FRONTEND_ENDPOINT]
       }
 });
 
@@ -48,19 +48,19 @@ io.on(EVENTS.CONNECT, (socket) => {
     });
 
     socket.on(EVENTS.SEND_METADATA, (data) => {
-        socket.to(data['peer-id']).emit('send-metadata', data);
+        socket.to(data['peer-id']).emit(EVENTS.SEND_METADATA, data);
     });
 
     socket.on(EVENTS.ICE_CANDIDATE, (data) => {
-        socket.to(data['peer-id']).emit('ice-candidate', data);
+        socket.to(data['peer-id']).emit(EVENTS.ICE_CANDIDATE, data);
     });
 
     socket.on(EVENTS.OFFER, (data) => {
-        socket.to(data['peer-id']).emit('offer', data);
+        socket.to(data['peer-id']).emit(EVENTS.OFFER, data);
     });
 
     socket.on(EVENTS.ANSWER, (data) => {
-        socket.to(data['peer-id']).emit('answer', data);
+        socket.to(data['peer-id']).emit(EVENTS.ANSWER, data);
     });
 
     socket.on(EVENTS.DISCONNECT, (reason) => {
