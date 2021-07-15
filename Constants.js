@@ -12,8 +12,8 @@ const URIS={
     CREATE_ROOM:'/createRoom',
     JOIN_ROOM:'/joinRoom',
     CREATE_NAMESPACE:'/createNamespace',
-    REMOVE_NAMESPACE:'removeNamespace',
-    CHECK_AVAILABILITY:'checkAvailability'
+    REMOVE_NAMESPACE:'/removeNamespace',
+    CHECK_AVAILABILITY:'/checkAvailability'
 }
 
 const URLS={

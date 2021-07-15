@@ -25,10 +25,12 @@ const io = require('socket.io')(http,{
 
 const { v4: uuidv4 } = require('uuid');
 
-app.use(express.json());
+const {socketHandler} =require('./socket.js')
+const {SessionData}=require('./session-data.js');
+SessionData.setIO(io);
 
-const namespaces = {};
-const socket_namespace = {};
+
+app.use(express.json());
 
 app.get(URIS.CREATE_ROOM, (req, res) => {
     let newUUID = uuidv4();
@@ -58,7 +60,8 @@ app.get(URIS.CREATE_NAMESPACE, (req, res) => {
     else {
         const namespace = io.of(`/${namespace_id}`);
         namespace.on('connect', socketHandler);
-        namespaces[namespace_id] = namespace;
+        SessionData.setNamespace(namespace_id,namespace);
+        // namespaces[namespace_id] = namespace;
         return res.json({
             'status': 200,
             'msg': 'Namespace added successfully.'
@@ -68,8 +71,10 @@ app.get(URIS.CREATE_NAMESPACE, (req, res) => {
 
 app.get(URIS.REMOVE_NAMESPACE, (req, res) => {
     let namespace_id = req.query['namespace_id'];
-    delete namespaces[namespace_id];
-    delete socket_namespace[namespace_id];
+    SessionData.removeNamespace(namespace_id);
+    SessionData.removeSocketNamespace(namespace_id);
+    // delete namespaces[namespace_id];
+    // delete socket_namespace[namespace_id];
     io._nsps.delete(`/${namespace_id}`);
     return res.json({
         'status': 200,
@@ -79,7 +84,7 @@ app.get(URIS.REMOVE_NAMESPACE, (req, res) => {
 
 app.get(URIS.CHECK_AVAILABILITY, (req, res) => {
     let namespace_id = req.query['namespace_id'];
-    if(socket_namespace[namespace_id]){
+    if(SessionData.getSocketNamespace(namespace_id)){
         return res.json({
             'status': 200,
             'msg': 'Doctor is available',
@@ -96,47 +101,7 @@ app.get(URIS.CHECK_AVAILABILITY, (req, res) => {
 
 
 
-function socketHandler(socket) {
 
-    socket.on('doctor-joined', (data) => {
-        socket_namespace[data['namespace-id']] = data['client-id'];
-    });
-
-    socket.on('join', (data) => {
-        if (io._nsps.get(socket.nsp.name).adapter.rooms.has(data['room-id']) === true) {
-            socket.join(data['room-id']);
-            socket.broadcast.in(data['room-id']).emit('room-joined', data);
-        }
-    });
-
-    socket.on('create', (data) => {
-        socket.join(data['room-id']);
-        const doc_socket_id = socket_namespace[socket.nsp.name.slice(1)];
-        if(doc_socket_id){
-            socket.to(doc_socket_id).emit('new-patient', data);
-        }
-    });
-    
-    socket.on('send-metadata', (data) => {
-        socket.to(data['peer-id']).emit('send-metadata', data);
-    });
-
-    socket.on('ice-candidate', (data) => {
-        socket.to(data['peer-id']).emit('ice-candidate', data);
-    });
-
-    socket.on('offer', (data) => {
-        socket.to(data['peer-id']).emit('offer', data);
-    });
-
-    socket.on('answer', (data) => {
-        socket.to(data['peer-id']).emit('answer', data);
-    });
-
-    socket.on('disconnect', (reason) => {
-        socket.broadcast.emit('client-disconnected', { 'client-id': socket.id });
-    });
-}
 
 
 // Temp funcs
@@ -144,7 +109,6 @@ function socketHandler(socket) {
 var waitingListPatient;
 
 app.post('/addPatientusers/addtowaitlist/',(req,res)=>{
-    console.log(req.body);
     waitingListPatient=req.body;
     return res.json({
         'status':200,
