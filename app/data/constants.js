@@ -8,13 +8,13 @@ const EVENTS={
     DISCONNECT:'disconnect',
 }
 
-const URIS={
-    CREATE_ROOM:'/createRoom',
-    JOIN_ROOM:'/joinRoom',
-    CREATE_NAMESPACE:'/createNamespace',
-    REMOVE_NAMESPACE:'/removeNamespace',
-    CHECK_AVAILABILITY:'/checkAvailability'
-}
+// const URIS={
+//     CREATE_ROOM:'/createRoom',
+//     JOIN_ROOM:'/joinRoom',
+//     CREATE_NAMESPACE:'/createNamespace',
+//     REMOVE_NAMESPACE:'/removeNamespace',
+//     CHECK_AVAILABILITY:'/checkAvailability'
+// }
 
 const URLS={
     FRONTEND_ENDPOINT:'http://localhost:4200',
