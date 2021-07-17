@@ -4,7 +4,7 @@
   "description": "Server for socket connection to establish a webrtc connection",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm install --no-optional",
     "start": "node app/server.js",
     "dev": "npx nodemon app/server.js"
   },
@@ -12,8 +12,11 @@
     "type": "git",
     "url": "https://github.com/GSri30/Telecommunication-SignalingServer"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "EHRC@IIIT-B",
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/GSri30/Telecommunication-SignalingServer/blob/main/LICENSE"
+  }],
   "dependencies": {
     "bole": "^4.0.0",
     "dotenv": "^10.0.0",
