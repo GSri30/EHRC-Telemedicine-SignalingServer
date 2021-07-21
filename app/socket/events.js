@@ -2,7 +2,10 @@ const {SessionData} = require('../data/session-data');
 
 function doctor_joined(data){
     // socket_namespace[data['namespace-id']] = data['client-id'];
+    console.log("DJ",data);
     SessionData.setSocketNamespace(data['namespace-id'],data['client-id']);
+    let a = SessionData.getSocketNamespace(data['namespace-id']);
+    console.log(a);
 }
 
 function join(data,socket){
@@ -26,9 +29,12 @@ function ack_doctor_entered(data,socket){
 }
 
 function create(data,socket){
+    console.log("Create")
     socket.join(data['room-id']);
     // const doc_socket_id = socket_namespace[socket.nsp.name.slice(1)];
     const doc_socket_id = SessionData.getSocketNamespace(socket.nsp.name.slice(1));
+    console.log(data['room-id']);
+    console.log(doc_socket_id);
     if(doc_socket_id){
         console.log("new-patient-server : 3");
         socket.to(doc_socket_id).emit('new-patient', data);
@@ -55,4 +61,4 @@ function disconnect(data,socket){
     socket.broadcast.emit('client-disconnected', { 'client-id': socket.id });
 }
 
-module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect}
+module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata}

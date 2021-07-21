@@ -1,16 +1,16 @@
 const {SessionData} = require('../data/session-data');
 
-const {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect} = require('./events');
+const {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata} = require('./events');
 
 function socketHandler(socket) {
 
-    socket.on('doctor-joined', doctor_joined);
+    socket.on('doctor-joined', (data) => {console.log("DOCTOR JOINED!!!");doctor_joined(data);});
     
     socket.on('join', (data) => {join(data,socket)});
 
     socket.on('ack-doctor-entered',(data) => {ack_doctor_entered(data,socket)});
 
-    socket.on('create', (data) => {create(data,socket)});
+    socket.on('create', (data) => {console.log("Create");create(data,socket)});
     
     socket.on('send-metadata', (data) => {send_metadata(data,socket)});
 
