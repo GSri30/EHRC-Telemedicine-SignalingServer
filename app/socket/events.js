@@ -66,4 +66,9 @@ function rejected(data,socket){
     socket.to(data['roomID']).emit('rejected',data);
     // socket.broadcast.emit('client-disconnected', { 'client-id': socket.id, 'room-id':data['room-id'] });
 }
-module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata,rejected}
+
+function patientLeft(data,socket){
+    console.log("patient left",data);
+    socket.broadcast.emit('patient-remove', {'namespace-id':data['namespace'] });
+}
+module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata,rejected,patientLeft}
