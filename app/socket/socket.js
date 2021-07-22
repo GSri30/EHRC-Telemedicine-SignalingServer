@@ -1,6 +1,6 @@
 const {SessionData} = require('../data/session-data');
 
-const {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata} = require('./events');
+const {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata,rejected} = require('./events');
 
 function socketHandler(socket) {
 
@@ -21,6 +21,8 @@ function socketHandler(socket) {
     socket.on('answer', (data) => {answer(data,socket)});
 
     socket.on('disconnect', (data) => {disconnect(data,socket)});
+
+    socket.on('doctor-rejected', (data) => {rejected(data,socket)});
 }
 
 function contains_room(room_id){

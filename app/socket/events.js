@@ -58,7 +58,12 @@ function answer(data,socket){
 }
 
 function disconnect(data,socket){
-    socket.broadcast.emit('client-disconnected', { 'client-id': socket.id });
+    console.log("disconnect",data)
+    socket.broadcast.emit('client-disconnected', { 'client-id': socket.id, 'room-id':data['room-id'] });
 }
-
-module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata}
+function rejected(data,socket){
+    console.log("rejected",data)
+    socket.to(data['roomID']).emit('rejected',data);
+    // socket.broadcast.emit('client-disconnected', { 'client-id': socket.id, 'room-id':data['room-id'] });
+}
+module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata,rejected}
