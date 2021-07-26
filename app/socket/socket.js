@@ -4,13 +4,13 @@ const {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,d
 
 function socketHandler(socket) {
 
-    socket.on('doctor-joined', (data) => {console.log("DOCTOR JOINED!!!");doctor_joined(data);});
+    socket.on('doctor-joined', (data) => {doctor_joined(data);});
     
     socket.on('join', (data) => {join(data,socket)});
 
     socket.on('ack-doctor-entered',(data) => {ack_doctor_entered(data,socket)});
 
-    socket.on('create', (data) => {console.log("Create");create(data,socket)});
+    socket.on('create', (data) => {create(data,socket)});
     
     socket.on('send-metadata', (data) => {send_metadata(data,socket)});
 
@@ -45,15 +45,12 @@ function create_namespace(namespace_id){
     const namespace = SessionData.io.of(`/${namespace_id}`);
     namespace.on('connect', socketHandler);
     SessionData.setNamespace(namespace_id,namespace);
-    // namespaces[namespace_id] = namespace;
 }
 
 function remove_namespace(namespace_id){
     SessionData.removeNamespace(namespace_id);
     SessionData.removeSocketNamespace(namespace_id);
-    // delete namespaces[namespace_id];
-    // delete socket_namespace[namespace_id];
-    io._nsps.delete(`/${namespace_id}`);
+    SessionData.io._nsps.delete(`/${namespace_id}`);
 }
 
 function check_availability(namespace_id){
