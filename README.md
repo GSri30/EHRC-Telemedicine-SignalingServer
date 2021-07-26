@@ -1,6 +1,6 @@
 # EHRC-Telemedicine-Signaling-Server
 
-This server is made as part of the 'Telemedicine' application. The server handles the core communication part of the main application. 
+This server is made as part of the 'Telemedicine' ([Telemedicine-Frontend](https://github.com/divyamagwl/EHRC-Telemedicine-frontend#telecommunication-doctor-frontend) , [Telemedicine-Backend](https://github.com/architsangal/EHRC-Telemedicine-Backend)) application. The server handles the core communication part of the main application. 
 
 Provides functionalities including creating, removing, checking namespaces, rooms and all other required socket events to setup the client-server arch. 
 
@@ -111,10 +111,6 @@ app/server.js
 ## Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/GSri30/EHRC-Telemedicine-SignalingServer/issues). 
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
 
 ## License
 
