@@ -53,7 +53,15 @@ function rejected(data,socket){
 }
 
 function patientLeft(data,socket){
-    socket.broadcast.emit('patient-remove', {'namespace-id':data['namespace'] });
+    socket.broadcast.emit('patient-remove', {'patientID':data['patientID'] });
 }
 
-module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata,rejected,patientLeft}
+function doctorEnded(data,socket){
+    socket.broadcast.emit('doctor-ended', {'patientID':data['patientID'] });
+}
+
+function patientEnded(data,socket){
+    socket.broadcast.emit('patient-ended', {'patientID':data['patientID'] });
+}
+
+module.exports = {doctor_joined,join,ack_doctor_entered,create,ice_candidate,offer,answer,disconnect,send_metadata,rejected,patientLeft,doctorEnded,patientEnded}
